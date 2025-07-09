@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:drawable="@drawable/outline_event_note" />
+    <item android:drawable="@drawable/outline_schedule" />
+    <item android:drawable="@drawable/outline_tablechart" />
+    <item android:drawable="@drawable/outline_task" />
+
+</layer-list>
