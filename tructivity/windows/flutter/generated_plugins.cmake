@@ -4,9 +4,9 @@
 
 list(APPEND FLUTTER_PLUGIN_LIST
   awesome_notifications
+  file_selector_windows
   flutter_secure_storage_windows
   local_auth_windows
-  pasteboard
   url_launcher_windows
 )
 
