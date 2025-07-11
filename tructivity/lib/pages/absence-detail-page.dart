@@ -33,7 +33,7 @@ class AbsenceDetail extends StatelessWidget {
                 child: DataTable(
                   horizontalMargin: 20,
                   headingTextStyle: TextStyle(
-                    color: Theme.of(context).textTheme.bodyText1!.color!,
+                    color: Theme.of(context).textTheme.bodyLarge!.color!,
                     fontSize: 18,
                     fontWeight: FontWeight.w500,
                   ),

@@ -131,7 +131,7 @@ class _PromodoroState extends State<Promodoro> {
                     ),
                     style: ElevatedButton.styleFrom(
                       minimumSize: Size(220, 50),
-                      primary:
+                      backgroundColor:
                           _breakMode == true ? Colors.teal : Colors.red[400],
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(50)),

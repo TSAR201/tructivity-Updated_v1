@@ -10,10 +10,11 @@ class CustomCalendar extends StatelessWidget {
     return Calendar(
         startOnMonday: true,
         weekDays: ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'],
-        events: getCalendarEvents,
+        eventsList: getCalendarEvents,
         isExpandable: true,
         selectedColor: Colors.teal,
         todayColor: Colors.teal,
+
         ///ff_log selectedTodayColor added, because in updated package it will show red by default
         selectedTodayColor: Colors.teal,
         eventDoneColor: Colors.grey[400],

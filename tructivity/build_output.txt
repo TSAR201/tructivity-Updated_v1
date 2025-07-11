@@ -6,6 +6,8 @@ Warning: The plugin flutter_plugin_android_lifecycle requires Android SDK versio
 For more information about build configuration, see https://flutter.dev/to/review-gradle-config.
 Warning: The plugin home_widget requires Android SDK version 35 or higher.
 For more information about build configuration, see https://flutter.dev/to/review-gradle-config.
+Warning: The plugin image_picker_android requires Android SDK version 35 or higher.
+For more information about build configuration, see https://flutter.dev/to/review-gradle-config.
 Warning: The plugin local_auth_android requires Android SDK version 35 or higher.
 For more information about build configuration, see https://flutter.dev/to/review-gradle-config.
 Warning: The plugin path_provider_android requires Android SDK version 35 or higher.
@@ -16,15 +18,19 @@ Warning: The plugin shared_preferences_android requires Android SDK version 35 o
 For more information about build configuration, see https://flutter.dev/to/review-gradle-config.
 Warning: The plugin url_launcher_android requires Android SDK version 35 or higher.
 For more information about build configuration, see https://flutter.dev/to/review-gradle-config.
+Warning: The plugin video_player_android requires Android SDK version 35 or higher.
+For more information about build configuration, see https://flutter.dev/to/review-gradle-config.
 Your project is configured to compile against Android SDK 34, but the following plugin(s) require to be compiled against a higher Android SDK version:
 - flutter_native_splash compiles against Android SDK 35
 - flutter_plugin_android_lifecycle compiles against Android SDK 35
 - home_widget compiles against Android SDK 35
+- image_picker_android compiles against Android SDK 35
 - local_auth_android compiles against Android SDK 35
 - path_provider_android compiles against Android SDK 35
 - quick_actions_android compiles against Android SDK 35
 - shared_preferences_android compiles against Android SDK 35
 - url_launcher_android compiles against Android SDK 35
+- video_player_android compiles against Android SDK 35
 Fix this issue by compiling against the highest Android SDK version (they are backward compatible).
 Add the following to D:\Dev\tructivity-Updated\tructivity\android\app\build.gradle:
 
@@ -33,92 +39,30 @@ Add the following to D:\Dev\tructivity-Updated\tructivity\android\app\build.grad
         ...
     }
 
-Error: Couldn't resolve the package 'local_auth_ios' in 'package:local_auth_ios/local_auth_ios.dart'.
-lib/pages/login-page.dart:7:8: Error: Not found: 'package:local_auth_ios/local_auth_ios.dart'
-import 'package:local_auth_ios/local_auth_ios.dart';
-       ^
-lib/theme/theme.dart:133:7: Error: No named parameter with the name 'bodyText1'.
-      bodyText1: TextStyle(
-      ^^^^^^^^^
-/D:/src/flutter/packages/flutter/lib/src/material/text_theme.dart:121:9: Context: Found this candidate, but the arguments don't match.
-  const TextTheme({
-        ^^^^^^^^^
-lib/theme/theme.dart:180:7: Error: No named parameter with the name 'bodyText1'.
-      bodyText1: TextStyle(
-      ^^^^^^^^^
-/D:/src/flutter/packages/flutter/lib/src/material/text_theme.dart:121:9: Context: Found this candidate, but the arguments don't match.
-  const TextTheme({
-        ^^^^^^^^^
-lib/pages/login-page.dart:151:11: Error: The method 'IOSAuthMessages' isn't defined for the class '_LoginPageState'.
- - '_LoginPageState' is from 'package:tructivity/pages/login-page.dart' ('lib/pages/login-page.dart').
-Try correcting the name to the name of an existing method, or defining a method named 'IOSAuthMessages'.
-          IOSAuthMessages(
-          ^^^^^^^^^^^^^^^
-lib/pages/absence-detail-page.dart:36:56: Error: The getter 'bodyText1' isn't defined for the class 'TextTheme'.
- - 'TextTheme' is from 'package:flutter/src/material/text_theme.dart' ('/D:/src/flutter/packages/flutter/lib/src/material/text_theme.dart').
-Try correcting the name to the name of an existing getter, or defining a getter or field named 'bodyText1'.
-                    color: Theme.of(context).textTheme.bodyText1!.color!,
-                                                       ^^^^^^^^^
-lib/widgets/custom-calendar.dart:13:9: Error: No named parameter with the name 'events'.
-        events: getCalendarEvents,
-        ^^^^^^
-/C:/Users/wajiz.pk/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_neat_and_clean_calendar-0.4.16/lib/flutter_neat_and_clean_calendar.dart:155:3: Context: Found this candidate, but the arguments don't match.
-  Calendar(
-  ^^^^^^^^
+lib/dialogs/absence-dialog.dart:17:38: Error: 'TypeAheadTeacherFieldState' isn't a type.
+  final _teacherFieldKey = GlobalKey<TypeAheadTeacherFieldState>();
+                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^
+lib/dialogs/schedule-dialog.dart:21:38: Error: 'TypeAheadTeacherFieldState' isn't a type.
+  final _teacherFieldKey = GlobalKey<TypeAheadTeacherFieldState>();
+                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^
+lib/dialogs/new-homewok-dialog.dart:36:38: Error: 'TypeAheadTeacherFieldState' isn't a type.
+  final _teacherFieldKey = GlobalKey<TypeAheadTeacherFieldState>();
+                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^
+lib/dialogs/timetable-dialog.dart:22:38: Error: 'TypeAheadTeacherFieldState' isn't a type.
+  final _teacherFieldKey = GlobalKey<TypeAheadTeacherFieldState>();
+                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^
+lib/dialogs/homework-dialog.dart:23:38: Error: 'TypeAheadTeacherFieldState' isn't a type.
+  final _teacherFieldKey = GlobalKey<TypeAheadTeacherFieldState>();
+                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^
 lib/pages/note-detail-page.dart:120:17: Error: No named parameter with the name 'scrollable'.
                 scrollable: true,
                 ^^^^^^^^^^
-/C:/Users/wajiz.pk/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_quill-11.4.1/lib/src/editor/editor.dart:141:3: Context: Found this candidate, but the arguments don't match.
+/D:/FlutterPubCache/hosted/pub.dev/flutter_quill-11.4.1/lib/src/editor/editor.dart:141:3: Context: Found this candidate, but the arguments don't match.
   QuillEditor({
   ^^^^^^^^^^^
 lib/pages/note-detail-page.dart:144:28: Error: Undefined name 'QuillToolbar'.
               child: quill.QuillToolbar.basic(
                            ^^^^^^^^^^^^
-lib/widgets/custom-datetime-field.dart:38:9: Error: No named parameter with the name 'onDateSelected'.
-        onDateSelected: (val) {
-        ^^^^^^^^^^^^^^
-/C:/Users/wajiz.pk/AppData/Local/Pub/Cache/hosted/pub.dev/date_field-6.0.3+1/lib/src/widgets/field.dart:58:3: Context: Found this candidate, but the arguments don't match.
-  DateTimeField({
-  ^^^^^^^^^^^^^
-lib/widgets/type-ahead-subject-field.dart:61:24: Error: The method 'TypeAheadFormField' isn't defined for the class '_TypeAheadSubjectFieldState'.
- - '_TypeAheadSubjectFieldState' is from 'package:tructivity/widgets/type-ahead-subject-field.dart' ('lib/widgets/type-ahead-subject-field.dart').
-Try correcting the name to the name of an existing method, or defining a method named 'TypeAheadFormField'.
-                return TypeAheadFormField(
-                       ^^^^^^^^^^^^^^^^^^
-lib/widgets/type-ahead-subject-field.dart:85:43: Error: The method 'TextFieldConfiguration' isn't defined for the class '_TypeAheadSubjectFieldState'.
- - '_TypeAheadSubjectFieldState' is from 'package:tructivity/widgets/type-ahead-subject-field.dart' ('lib/widgets/type-ahead-subject-field.dart').
-Try correcting the name to the name of an existing method, or defining a method named 'TextFieldConfiguration'.
-                  textFieldConfiguration: TextFieldConfiguration(
-                                          ^^^^^^^^^^^^^^^^^^^^^^
-lib/widgets/type-ahead-teacher-field.dart:55:24: Error: The method 'TypeAheadFormField' isn't defined for the class 'TypeAheadTeacherFieldState'.
- - 'TypeAheadTeacherFieldState' is from 'package:tructivity/widgets/type-ahead-teacher-field.dart' ('lib/widgets/type-ahead-teacher-field.dart').
-Try correcting the name to the name of an existing method, or defining a method named 'TypeAheadFormField'.
-                return TypeAheadFormField(
-                       ^^^^^^^^^^^^^^^^^^
-lib/widgets/type-ahead-teacher-field.dart:77:43: Error: The method 'TextFieldConfiguration' isn't defined for the class 'TypeAheadTeacherFieldState'.
- - 'TypeAheadTeacherFieldState' is from 'package:tructivity/widgets/type-ahead-teacher-field.dart' ('lib/widgets/type-ahead-teacher-field.dart').
-Try correcting the name to the name of an existing method, or defining a method named 'TextFieldConfiguration'.
-                  textFieldConfiguration: TextFieldConfiguration(
-                                          ^^^^^^^^^^^^^^^^^^^^^^
-lib/pages/promodoro-page.dart:134:23: Error: No named parameter with the name 'primary'.
-                      primary:
-                      ^^^^^^^
-/D:/src/flutter/packages/flutter/lib/src/material/elevated_button.dart:206:22: Context: Found this candidate, but the arguments don't match.
-  static ButtonStyle styleFrom({
-                     ^^^^^^^^^
-Unhandled exception:
-FileSystemException(uri=org-dartlang-untranslatable-uri:package%3Alocal_auth_ios%2Flocal_auth_ios.dart; message=StandardFileSystem only supports file:* and data:* URIs)
-#0      StandardFileSystem.entityForUri (package:front_end/src/api_prototype/standard_file_system.dart:45)
-#1      asFileUri (package:vm/kernel_front_end.dart:820)
-#2      writeDepfile (package:vm/kernel_front_end.dart:960)
-<asynchronous suspension>
-#3      FrontendCompiler.compile (package:frontend_server/frontend_server.dart:712)
-<asynchronous suspension>
-#4      starter (package:frontend_server/starter.dart:109)
-<asynchronous suspension>
-#5      main (file:///C:/b/s/w/ir/x/w/sdk/pkg/frontend_server/bin/frontend_server_starter.dart:13)
-<asynchronous suspension>
-
 Target kernel_snapshot_program failed: Exception
 
 
@@ -134,6 +78,6 @@ Execution failed for task ':app:compileFlutterBuildRelease'.
 > Run with --scan to get full insights.
 > Get more help at https://help.gradle.org.
 
-BUILD FAILED in 1m 1s
-Running Gradle task 'assembleRelease'...                           62.0s
+BUILD FAILED in 1m 12s
+Running Gradle task 'assembleRelease'...                           73.2s
 Gradle task assembleRelease failed with exit code 1

@@ -130,19 +130,19 @@ class ThemeProvider with ChangeNotifier {
             textStyle: MaterialStateProperty.all(TextStyle(
                 fontFamily: fontFamily, fontWeight: FontWeight.w500)))),
     textTheme: TextTheme(
-      bodyText1: TextStyle(
+      bodyLarge: TextStyle(
         color: Colors.black87,
         fontFamily: fontFamily,
       ),
-      bodyText2: TextStyle(
+      bodyMedium: TextStyle(
         color: Colors.black87,
         fontFamily: fontFamily,
       ),
-      subtitle1: TextStyle(
+      titleMedium: TextStyle(
         color: Colors.black87,
         fontFamily: fontFamily,
       ),
-      headline6: TextStyle(
+      titleLarge: TextStyle(
         color: Colors.black87,
         fontFamily: fontFamily,
       ),
@@ -177,15 +177,15 @@ class ThemeProvider with ChangeNotifier {
                 fontFamily: fontFamily, fontWeight: FontWeight.w500)))),
     cardColor: Colors.black,
     textTheme: TextTheme(
-      bodyText1: TextStyle(
+      bodyLarge: TextStyle(
         color: Colors.grey[400],
         fontFamily: fontFamily,
       ),
-      bodyText2: TextStyle(
+      bodyMedium: TextStyle(
         color: Colors.grey[400],
         fontFamily: fontFamily,
       ),
-      subtitle1: TextStyle(
+      titleMedium: TextStyle(
         color: Colors.grey[400],
         fontFamily: fontFamily,
       ),
@@ -194,13 +194,13 @@ class ThemeProvider with ChangeNotifier {
     bottomNavigationBarTheme:
         BottomNavigationBarThemeData(backgroundColor: Colors.grey[800]),
     scaffoldBackgroundColor: Colors.grey[900],
-    dialogBackgroundColor: Colors.grey[900],
     floatingActionButtonTheme:
         FloatingActionButtonThemeData(backgroundColor: Colors.teal),
     colorScheme: ColorScheme.dark().copyWith(
       secondary: Colors.teal,
       primary: Colors.teal,
     ),
+    dialogTheme: DialogThemeData(backgroundColor: Colors.grey[900]),
   );
   ThemeData get getTheme => _themeData;
   swapTheme() async {
