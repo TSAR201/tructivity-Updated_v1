@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:passcode_screen/passcode_screen.dart';
+import 'package:local_auth_darwin/local_auth_darwin.dart';
 import 'package:local_auth_android/local_auth_android.dart';
-import 'package:local_auth_ios/local_auth_ios.dart';
 
 class LoginPage extends StatefulWidget {
   final String pin, fingerprint;

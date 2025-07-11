@@ -28,7 +28,7 @@ dependencies:
   flutter_typeahead: ^5.0.1
   font_awesome_flutter: ^10.5.0
   home_widget: ^0.8.0
-  local_auth: ^2.1.7
+  local_auth: ^2.3.0
   open_file: ^3.3.2
   passcode_screen: ^2.0.0
   path_provider: ^2.1.1
