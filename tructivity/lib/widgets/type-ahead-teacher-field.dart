@@ -30,6 +30,7 @@ class TypeAheadTeacherFieldState extends State<TypeAheadTeacherField> {
   final _db = DatabaseHelper.instance;
   List<String> _options = [];
   List<TeacherModel> _teachers = [];
+
   @override
   void initState() {
     super.initState();
@@ -52,40 +53,37 @@ class TypeAheadTeacherFieldState extends State<TypeAheadTeacherField> {
               } else {
                 _teachers = snapshot.data!;
                 _options = getOptions();
-                return TypeAheadFormField(
-                  validator: !widget.validate
-                      ? null
-                      : (val) {
-                          if (val == '') {
-                            return 'Required Field';
-                          }
-                          return null;
-                        },
-                  suggestionsCallback: (pattern) => _options.where((element) =>
-                      element.toLowerCase().contains(pattern.toLowerCase())),
-                  itemBuilder: (BuildContext cont, String item) => ListTile(
+                return TypeAheadField<String>(
+                  suggestionsCallback: (pattern) => _options
+                      .where((element) =>
+                          element.toLowerCase().contains(pattern.toLowerCase()))
+                      .toList(),
+                  itemBuilder: (BuildContext context, String item) => ListTile(
                     title: Text(item),
                   ),
-                  onSuggestionSelected: (String item) {
+                  onSelected: (String item) {
                     this.controller.text = item;
                     widget.onChanged(item);
                   },
                   hideOnEmpty: true,
-                  hideSuggestionsOnKeyboardHide: true,
-                  hideOnLoading: true,
-                  getImmediateSuggestions: true,
-                  textFieldConfiguration: TextFieldConfiguration(
-                    textCapitalization: widget.capitalizaton,
-                    onChanged: (String item) {
-                      widget.onChanged(item);
-                    },
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      labelText: widget.labelText,
-                      prefixIcon: Icon(widget.fieldIcon),
-                    ),
-                    controller: this.controller,
-                  ),
+                  hideWithKeyboard: true,
+                  debounceDuration: Duration.zero, // For immediate suggestions
+                  builder: (context, controller, focusNode) {
+                    return TextField(
+                      controller: controller,
+                      focusNode: focusNode,
+                      textCapitalization: widget.capitalizaton,
+                      onChanged: widget.onChanged,
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        labelText: widget.labelText,
+                        prefixIcon: Icon(widget.fieldIcon),
+                        errorText: widget.validate && controller.text.isEmpty
+                            ? 'Required Field'
+                            : null,
+                      ),
+                    );
+                  },
                 );
               }
             }),
@@ -94,10 +92,6 @@ class TypeAheadTeacherFieldState extends State<TypeAheadTeacherField> {
   }
 
   List<String> getOptions() {
-    List<String> l = [];
-    for (TeacherModel item in _teachers) {
-      l.add(item.name);
-    }
-    return l;
+    return _teachers.map((item) => item.name).toList();
   }
 }

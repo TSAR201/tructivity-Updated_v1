@@ -124,6 +124,7 @@ class _NoteDetailPageState extends State<NoteDetailPage> {
                 paintCursorAboveText: true,
                 expands: false,
                 padding: EdgeInsets.zero,
+
                 ///ff_log embedBuilder commented, removed in updated package
                 // embedBuilder:
                 //     (BuildContext context, quill.Embed node, bool readOnly) {
@@ -144,6 +145,7 @@ class _NoteDetailPageState extends State<NoteDetailPage> {
               child: quill.QuillToolbar.basic(
                 multiRowsDisplay: false,
                 locale: Locale('en'),
+
                 ///ff_log showImageButton showVideoButton, removed in updated package
                 // showImageButton: false,
                 // showVideoButton: false,

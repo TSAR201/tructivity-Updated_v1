@@ -34,6 +34,7 @@ class _TypeAheadSubjectFieldState extends State<TypeAheadSubjectField> {
   final _db = DatabaseHelper.instance;
   List<String> _options = [];
   List<SubjectModel> _subjects = [];
+
   @override
   void initState() {
     super.initState();
@@ -58,42 +59,39 @@ class _TypeAheadSubjectFieldState extends State<TypeAheadSubjectField> {
               } else {
                 _subjects = snapshot.data!;
                 _options = getOptions();
-                return TypeAheadFormField(
-                  validator: !widget.validate
-                      ? null
-                      : (val) {
-                          if (val == '') {
-                            return 'Required Field';
-                          }
-                          return null;
-                        },
-                  suggestionsCallback: (pattern) => _options.where((element) =>
-                      element.toLowerCase().contains(pattern.toLowerCase())),
-                  itemBuilder: (BuildContext cont, String item) => ListTile(
+                return TypeAheadField<String>(
+                  suggestionsCallback: (pattern) => _options
+                      .where((element) =>
+                          element.toLowerCase().contains(pattern.toLowerCase()))
+                      .toList(),
+                  itemBuilder: (BuildContext context, String item) => ListTile(
                     title: Text(item),
                   ),
-                  onSuggestionSelected: (String item) {
+                  onSelected: (String item) {
                     this._controller.text = item;
                     int index = _options.indexOf(item);
                     CourseModel course = getModel(index);
                     widget.onSuggestionSelected(course);
                   },
                   hideOnEmpty: true,
-                  hideSuggestionsOnKeyboardHide: true,
-                  hideOnLoading: true,
-                  getImmediateSuggestions: true,
-                  textFieldConfiguration: TextFieldConfiguration(
-                    textCapitalization: widget.capitalizaton,
-                    onChanged: (String item) {
-                      widget.onChanged(item);
-                    },
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      labelText: widget.labelText,
-                      prefixIcon: Icon(widget.fieldIcon),
-                    ),
-                    controller: this._controller,
-                  ),
+                  hideWithKeyboard: true,
+                  debounceDuration: Duration.zero, // For immediate suggestions
+                  builder: (context, controller, focusNode) {
+                    return TextField(
+                      controller: controller,
+                      focusNode: focusNode,
+                      textCapitalization: widget.capitalizaton,
+                      onChanged: widget.onChanged,
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        labelText: widget.labelText,
+                        prefixIcon: Icon(widget.fieldIcon),
+                        errorText: widget.validate && controller.text.isEmpty
+                            ? 'Required Field'
+                            : null,
+                      ),
+                    );
+                  },
                 );
               }
             }),
@@ -102,17 +100,12 @@ class _TypeAheadSubjectFieldState extends State<TypeAheadSubjectField> {
   }
 
   List<String> getOptions() {
-    List<String> l = [];
-    for (SubjectModel item in _subjects) {
-      l.add(item.subject);
-    }
-    return l;
+    return _subjects.map((item) => item.subject).toList();
   }
 
   CourseModel getModel(int index) {
     SubjectModel subj = _subjects[index];
-    CourseModel courseData = CourseModel(
+    return CourseModel(
         room: subj.room, subject: subj.subject, teacher: subj.teacher);
-    return courseData;
   }
 }
