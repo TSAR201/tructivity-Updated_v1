@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "728679104997",
+    "project_id": "tructivity",
+    "storage_bucket": "tructivity.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:728679104997:android:e81760e1acf57370b82f0c",
+        "android_client_info": {
+          "package_name": "com.tructivity.tructivity"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA8-9Icaifr4TsHFKp_uPLBYGf5J8OFTTQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
