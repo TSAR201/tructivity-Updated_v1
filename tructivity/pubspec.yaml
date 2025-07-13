@@ -9,7 +9,7 @@ environment:
   sdk: ">=2.12.0 <=3.10.6"
 
 dependencies:
-  awesome_notifications: ^0.10.0
+  awesome_notifications: ^0.10.1
   calendar_view: ^1.0.4
   cupertino_icons: ^1.0.6
   date_field: ^6.0.3+1
@@ -43,6 +43,8 @@ dependencies:
   url_launcher: ^6.1.14
   flutter_slider_drawer_v: ^2.0.2
   flutter_quill_extensions: ^11.0.0
+dependency_overrides:
+  intl: 0.19.0
 dev_dependencies:
   change_app_package_name: ^1.0.0
   flutter_native_splash: ^2.2.19
