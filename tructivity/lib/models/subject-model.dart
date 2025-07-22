@@ -1,6 +1,6 @@
 class SubjectModel {
   String subject, teacher, room, note, category;
-  final int? id;
+  final String? id;
   SubjectModel({
     required this.subject,
     this.id,
@@ -10,14 +10,14 @@ class SubjectModel {
     required this.category,
   });
 
-  factory SubjectModel.fromMap(Map<String, dynamic> json) {
+  factory SubjectModel.fromMap(Map<String, dynamic> json, [String? docId]) {
     return SubjectModel(
       subject: json['subject'],
       note: json['note'],
       room: json['room'],
       teacher: json['teacher'],
       category: json['category'],
-      id: json['id'],
+      id: docId ?? json['id'],
     );
   }
 

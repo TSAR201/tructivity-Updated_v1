@@ -7,7 +7,7 @@ class HomeworkModel {
   DateTime? notificationDateTime;
   DateTime pickedDateTime;
   bool isDone;
-  final int? id;
+  final String? id;
   HomeworkModel(
       {required this.subject,
       required this.teacher,
@@ -18,7 +18,7 @@ class HomeworkModel {
       required this.type,
       this.id,
       this.notificationDateTime});
-  factory HomeworkModel.fromMap(Map<String, dynamic> json) {
+  factory HomeworkModel.fromMap(Map<String, dynamic> json, [String? docId]) {
     DateTime dateTime =
         dateTimeFromString(dateTimeString: json['pickedDateTime']);
     var notification;
@@ -39,7 +39,7 @@ class HomeworkModel {
       note: json['note'],
       pickedDateTime: dateTime,
       notificationDateTime: notification,
-      id: json['id'],
+      id: docId ?? json['id'],
     );
   }
 
@@ -50,7 +50,7 @@ class HomeworkModel {
     String note = data[1];
     String category = data[2];
     String type = data[3];
-    int id = int.parse(data[data.length - 2]);
+    String id = data[data.length - 2]; // Changed from int.parse to String
     var notification;
     if (data[data.length - 1] == '') {
       notification = null;

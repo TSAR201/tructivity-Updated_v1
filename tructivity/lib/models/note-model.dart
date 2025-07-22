@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class NoteModel {
   String title, description, category;
-  int? id;
+  String? id;
   Color color;
   DateTime pickedDateTime;
   NoteModel({
@@ -13,7 +13,7 @@ class NoteModel {
     required this.color,
     required this.category,
   });
-  factory NoteModel.fromMap(Map<String, dynamic> json) {
+  factory NoteModel.fromMap(Map<String, dynamic> json, [String? docId]) {
     List data = json['pickedDateTime'].split('-');
     int year = int.parse(data[0]);
     int month = int.parse(data[1]);
@@ -27,7 +27,7 @@ class NoteModel {
       title: json['title'],
       description: json['description'],
       pickedDateTime: dateTime,
-      id: json['id'],
+      id: docId ?? json['id'],
       category: json['category'],
     );
   }

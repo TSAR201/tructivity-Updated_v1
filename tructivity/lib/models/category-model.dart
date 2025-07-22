@@ -1,11 +1,11 @@
 class CategoryModel {
   String category;
-  final int? id;
+  final String? id;
   CategoryModel({required this.category, this.id});
-  factory CategoryModel.fromMap(Map<String, dynamic> json) {
+  factory CategoryModel.fromMap(Map<String, dynamic> json, [String? docId]) {
     return CategoryModel(
       category: json['category'],
-      id: json['id'],
+      id: docId ?? json['id'],
     );
   }
 

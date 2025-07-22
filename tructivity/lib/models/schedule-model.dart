@@ -2,7 +2,7 @@ import 'package:tructivity/functions.dart';
 import 'package:flutter/material.dart';
 
 class ScheduleModel {
-  final int? id;
+  final String? id;
   Color color;
   String subject, teacher, room, note, type;
   DateTime start, end;
@@ -17,7 +17,7 @@ class ScheduleModel {
     required this.type,
     this.id,
   });
-  factory ScheduleModel.fromMap(Map<String, dynamic> json) {
+  factory ScheduleModel.fromMap(Map<String, dynamic> json, [String? docId]) {
     String start = json['start'];
     String end = json['end'];
     DateTime startTime = dateTimeFromString(dateTimeString: start);
@@ -27,7 +27,7 @@ class ScheduleModel {
       subject: json['subject'],
       teacher: json['teacher'],
       note: json['note'],
-      id: json['id'],
+      id: docId ?? json['id'],
       color: Color(int.parse(json['color'])),
       room: json['room'],
       start: startTime,

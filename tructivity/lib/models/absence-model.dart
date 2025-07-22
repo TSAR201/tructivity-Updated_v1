@@ -1,7 +1,7 @@
 class AbsenceModel {
   String subject, teacher, room, category, note;
   DateTime pickedDateTime;
-  final int? id;
+  final String? id;
   AbsenceModel({
     required this.subject,
     required this.teacher,
@@ -11,7 +11,7 @@ class AbsenceModel {
     required this.note,
     this.id,
   });
-  factory AbsenceModel.fromMap(Map<String, dynamic> json) {
+  factory AbsenceModel.fromMap(Map<String, dynamic> json, [String? docId]) {
     List data = json['pickedDateTime'].split('-');
     var year = int.parse(data[0]);
     var month = int.parse(data[1]);
@@ -27,7 +27,7 @@ class AbsenceModel {
         teacher: json['teacher'],
         room: json['room'],
         pickedDateTime: dateTime,
-        id: json['id']);
+        id: docId ?? json['id']);
   }
   Map<String, dynamic> toMap() {
     return {

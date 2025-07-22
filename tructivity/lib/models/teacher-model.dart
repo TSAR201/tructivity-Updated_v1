@@ -1,6 +1,6 @@
 class TeacherModel {
   String name, phone, email, website, officeHours, address;
-  final int? id;
+  final String? id;
   TeacherModel(
       {required this.name,
       required this.phone,
@@ -9,13 +9,13 @@ class TeacherModel {
       this.id,
       required this.officeHours,
       required this.website});
-  factory TeacherModel.fromMap(Map<String, dynamic> json) {
+  factory TeacherModel.fromMap(Map<String, dynamic> json, [String? docId]) {
     return TeacherModel(
       address: json['address'],
       name: json['name'],
       phone: json['phone'],
       email: json['email'],
-      id: json['id'],
+      id: docId ?? json['id'],
       officeHours: json['officeHours'],
       website: json['website'],
     );

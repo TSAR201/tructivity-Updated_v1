@@ -3,7 +3,7 @@ import 'package:tructivity/functions.dart';
 class LetterGradeModel {
   String grade, subject, category, note, weight;
   DateTime pickedDateTime;
-  final int? id;
+  final String? id;
   LetterGradeModel({
     required this.grade,
     required this.subject,
@@ -13,13 +13,13 @@ class LetterGradeModel {
     required this.weight,
     this.id,
   });
-  factory LetterGradeModel.fromMap(Map<String, dynamic> json) {
+  factory LetterGradeModel.fromMap(Map<String, dynamic> json, [String? docId]) {
     DateTime dateTime =
         dateTimeFromString(dateTimeString: json['pickedDateTime']);
     return LetterGradeModel(
       grade: json['grade'],
       subject: json['subject'],
-      id: json['id'],
+      id: docId ?? json['id'],
       category: json['category'],
       weight: json['weight'],
       note: json['note'],
