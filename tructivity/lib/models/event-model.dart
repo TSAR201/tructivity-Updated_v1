@@ -7,7 +7,7 @@ class EventModel {
   DateTime? notificationDateTime;
   bool isDone;
 
-  final int? id;
+  final String? id;
   EventModel({
     required this.subject,
     required this.event,
@@ -19,7 +19,7 @@ class EventModel {
     this.id,
     this.notificationDateTime,
   });
-  factory EventModel.fromMap(Map<String, dynamic> json) {
+  factory EventModel.fromMap(Map<String, dynamic> json, [String? docId]) {
     DateTime dateTime =
         dateTimeFromString(dateTimeString: json['pickedDateTime']);
     var notification;
@@ -39,7 +39,7 @@ class EventModel {
       location: json['location'],
       note: json['note'],
       pickedDateTime: dateTime,
-      id: json['id'],
+      id: docId ?? json['id'],
       notificationDateTime: notification,
     );
   }
@@ -49,7 +49,7 @@ class EventModel {
     String event = data[0];
     String note = data[1];
     String category = data[2];
-    int id = int.parse(data[3]);
+    String id = data[3]; // Changed from int.parse to String
     var notification;
     if (data[data.length - 1] == '') {
       notification = null;

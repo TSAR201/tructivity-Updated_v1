@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class TimetableDataModel {
-  final int? id;
+  final String? id;
   Color color;
   String subject, teacher, room, note;
   DateTime start, end;
@@ -15,7 +15,7 @@ class TimetableDataModel {
     required this.end,
     this.id,
   });
-  factory TimetableDataModel.fromMap(Map<String, dynamic> json) {
+  factory TimetableDataModel.fromMap(Map<String, dynamic> json, [String? docId]) {
     List data1 = json['start'].split('-');
     List data2 = json['end'].split('-');
     var year = int.parse(data1[0]);
@@ -31,7 +31,7 @@ class TimetableDataModel {
         subject: json['subject'],
         teacher: json['teacher'],
         note: json['note'],
-        id: json['id'],
+        id: docId ?? json['id'],
         color: Color(int.parse(json['color'])),
         room: json['room'],
         start: startTime,

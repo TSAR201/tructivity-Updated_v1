@@ -6,7 +6,7 @@ class TaskModel {
   bool isDone;
   DateTime pickedDateTime;
   DateTime? notificationDateTime;
-  final int? id;
+  final String? id;
 
   TaskModel({
     required this.task,
@@ -17,7 +17,7 @@ class TaskModel {
     this.id,
     this.notificationDateTime,
   });
-  factory TaskModel.fromMap(Map<String, dynamic> json) {
+  factory TaskModel.fromMap(Map<String, dynamic> json, [String? docId]) {
     DateTime dateTime =
         dateTimeFromString(dateTimeString: json['pickedDateTime']);
     var notification;
@@ -36,7 +36,7 @@ class TaskModel {
       note: json['note'],
       pickedDateTime: dateTime,
       notificationDateTime: notification,
-      id: json['id'],
+      id: docId ?? json['id'],
     );
   }
   factory TaskModel.fromNeatCleanCalendarEvent(
@@ -44,7 +44,7 @@ class TaskModel {
     List<String> data = calendarEvent.description.split('\n');
     String note = data[0];
     String category = data[1];
-    int id = int.parse(data[2]);
+    String id = data[2]; // Changed from int.parse to String
     var notification;
     if (data[data.length - 1] == '') {
       notification = null;

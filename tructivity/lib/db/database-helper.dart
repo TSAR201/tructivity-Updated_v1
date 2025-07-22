@@ -28,42 +28,39 @@ class DatabaseHelper {
   Future<List<T>> _getList<T>(
     String collection, {
     String? category,
-    required T Function(Map<String, dynamic> data) fromMap,
+    required T Function(Map<String, dynamic> data, String docId) fromMap,
   }) async {
     Query<Map<String, dynamic>> query = _db.collection(collection);
     if (category != null && category != 'All' && category.isNotEmpty) {
       query = query.where('category', isEqualTo: category);
     }
-    query = query.orderBy('id');
 
     final snapshot = await query.get();
     return snapshot.docs.map((doc) {
-      final data = doc.data();
-      data['id'] = int.tryParse(doc.id) ?? doc.id;
-      return fromMap(data);
+      return fromMap(doc.data(), doc.id);
     }).toList();
   }
 
   Future<List<SubjectModel>> getSubjectData() async =>
-      _getList('subject', fromMap: (e) => SubjectModel.fromMap(e));
+      _getList('subject', fromMap: (e, id) => SubjectModel.fromMap(e, id));
 
   Future<List<SubjectModel>> getSubjectsByCategory(String category) async =>
       _getList('subject',
-          category: category, fromMap: (e) => SubjectModel.fromMap(e));
+          category: category, fromMap: (e, id) => SubjectModel.fromMap(e, id));
 
   Future<List<HomeworkModel>> getHomeworkData(String category) async =>
       _getList('homework',
-          category: category, fromMap: (e) => HomeworkModel.fromMap(e));
+          category: category, fromMap: (e, id) => HomeworkModel.fromMap(e, id));
 
   Future<List<EventModel>> getEventData(String category) async =>
       _getList('event',
-          category: category, fromMap: (e) => EventModel.fromMap(e));
+          category: category, fromMap: (e, id) => EventModel.fromMap(e, id));
 
   Future<List<TaskModel>> getTaskData(String category) async => _getList('task',
-      category: category, fromMap: (e) => TaskModel.fromMap(e));
+      category: category, fromMap: (e, id) => TaskModel.fromMap(e, id));
 
   Future<List<CategoryModel>> getCategoryData(String collection) async =>
-      _getList(collection, fromMap: (e) => CategoryModel.fromMap(e));
+      _getList(collection, fromMap: (e, id) => CategoryModel.fromMap(e, id));
 
   Future<Map<String, List>> getHomeworkPageData(String category) async => {
         'homeworkData': await getHomeworkData(category),
@@ -89,38 +86,33 @@ class DatabaseHelper {
   }
 
   Future<List<TimetableDataModel>> getTimetableData() async =>
-      _getList('timetable', fromMap: (e) => TimetableDataModel.fromMap(e));
+      _getList('timetable', fromMap: (e, id) => TimetableDataModel.fromMap(e, id));
 
   Future<List<ScheduleModel>> getScheduleData() async =>
-      _getList('schedule', fromMap: (e) => ScheduleModel.fromMap(e));
+      _getList('schedule', fromMap: (e, id) => ScheduleModel.fromMap(e, id));
 
   Future<List<NoteModel>> getNoteData() async =>
-      _getList('note', fromMap: (e) => NoteModel.fromMap(e));
+      _getList('note', fromMap: (e, id) => NoteModel.fromMap(e, id));
 
   Future<List<NoteModel>> getNotesByCategory(String category) async =>
       _getList('note',
-          category: category, fromMap: (e) => NoteModel.fromMap(e));
+          category: category, fromMap: (e, id) => NoteModel.fromMap(e, id));
 
   Future<List<NoteCategoryModel>> getNoteCategoryData() async =>
-      _getList('noteCategory', fromMap: (e) => NoteCategoryModel.fromMap(e));
+      _getList('noteCategory', fromMap: (e, id) => NoteCategoryModel.fromMap(e, id));
 
   Future<List<AbsenceModel>> getAbsenceByCategory(String category) async =>
       _getList('absence',
-          category: category, fromMap: (e) => AbsenceModel.fromMap(e));
+          category: category, fromMap: (e, id) => AbsenceModel.fromMap(e, id));
 
   Future<List<AbsenceModel>> getAbsenceData() async =>
-      _getList('absence', fromMap: (e) => AbsenceModel.fromMap(e));
+      _getList('absence', fromMap: (e, id) => AbsenceModel.fromMap(e, id));
 
   Future<List<TeacherModel>> getTeacherData() async {
     try {
-      final snapshot =
-          await FirebaseFirestore.instance.collection('teacher').get();
-
+      final snapshot = await _db.collection('teacher').get();
       return snapshot.docs
-          .map((doc) => TeacherModel.fromMap({
-                ...doc.data(),
-                'id': doc.id, // ← ✅ Inject document ID here
-              }))
+          .map((doc) => TeacherModel.fromMap(doc.data(), doc.id))
           .toList();
     } catch (e) {
       print("Error fetching teacher data: $e");
@@ -135,106 +127,157 @@ class DatabaseHelper {
       };
 
   Future<int> add({required String table, required dynamic model}) async {
-    final ref = _db.collection(table).doc(model.id?.toString());
-    await ref.set(model.toMap());
-    return 1;
+    try {
+      if (model.id != null) {
+        // If ID is provided, use it as document ID
+        await _db.collection(table).doc(model.id).set(model.toMap());
+      } else {
+        // If no ID, let Firestore generate one
+        DocumentReference docRef = await _db.collection(table).add(model.toMap());
+        // Update the model with the new ID if needed
+        if (model is dynamic && model.id == null) {
+          model.id = docRef.id;
+        }
+      }
+      return 1;
+    } catch (e) {
+      print("Error adding document: $e");
+      return 0;
+    }
   }
 
   Future<int> update({required String table, required dynamic model}) async {
-    await _db.collection(table).doc(model.id.toString()).set(
-          model.toMap(),
-          SetOptions(merge: true),
-        );
-    return 1;
+    try {
+      if (model.id == null) {
+        print("Cannot update document without ID");
+        return 0;
+      }
+      
+      await _db.collection(table).doc(model.id).set(
+            model.toMap(),
+            SetOptions(merge: true),
+          );
+      return 1;
+    } catch (e) {
+      print("Error updating document: $e");
+      return 0;
+    }
   }
 
-  Future<int> remove({required String table, required int id}) async {
-    await _db.collection(table).doc(id.toString()).delete();
-    return 1;
+  Future<int> remove({required String table, required String id}) async {
+    try {
+      await _db.collection(table).doc(id).delete();
+      return 1;
+    } catch (e) {
+      print("Error removing document: $e");
+      return 0;
+    }
   }
 
   Future<int> removeDataByCategory({
     required String table,
     required String category,
   }) async {
-    final snapshot = await _db
-        .collection(table)
-        .where('category', isEqualTo: category)
-        .get();
-    final batch = _db.batch();
-    for (var doc in snapshot.docs) {
-      batch.delete(doc.reference);
+    try {
+      final snapshot = await _db
+          .collection(table)
+          .where('category', isEqualTo: category)
+          .get();
+      final batch = _db.batch();
+      for (var doc in snapshot.docs) {
+        batch.delete(doc.reference);
+      }
+      await batch.commit();
+      return 1;
+    } catch (e) {
+      print("Error removing data by category: $e");
+      return 0;
     }
-    await batch.commit();
-    return 1;
   }
 
-  Future getDataById(String table, int id) async {
-    final doc = await _db.collection(table).doc(id.toString()).get();
-    final data = doc.data();
-    if (data == null) return null;
-    data['id'] = id;
-    return convertToModel(data, table);
+  Future getDataById(String table, String id) async {
+    try {
+      final doc = await _db.collection(table).doc(id).get();
+      final data = doc.data();
+      if (data == null) return null;
+      return convertToModel(data, table, id);
+    } catch (e) {
+      print("Error getting document by ID: $e");
+      return null;
+    }
   }
 
   Future<void> removeNotification({
     required String table,
-    required int id,
+    required String id,
   }) async {
-    final doc = await _db.collection(table).doc(id.toString()).get();
-    final data = doc.data();
-    if (data != null) {
-      data['notificationDateTime'] = '';
-      await _db.collection(table).doc(id.toString()).set(data);
+    try {
+      final doc = await _db.collection(table).doc(id).get();
+      final data = doc.data();
+      if (data != null) {
+        data['notificationDateTime'] = '';
+        await _db.collection(table).doc(id).set(data);
+      }
+    } catch (e) {
+      print("Error removing notification: $e");
     }
   }
 
-  dynamic convertToModel(Map<String, dynamic> data, String table) {
+  dynamic convertToModel(Map<String, dynamic> data, String table, String docId) {
     switch (table) {
       case 'homework':
-        return HomeworkModel.fromMap(data);
+        return HomeworkModel.fromMap(data, docId);
       case 'event':
-        return EventModel.fromMap(data);
+        return EventModel.fromMap(data, docId);
       case 'task':
       default:
-        return TaskModel.fromMap(data);
+        return TaskModel.fromMap(data, docId);
     }
   }
 
   Future<List<String>> getTeacherNames() async {
-    final snapshot = await _db.collection('teacher').orderBy('id').get();
-    return snapshot.docs.map((e) => e.data()['name'].toString()).toList();
+    try {
+      final snapshot = await _db.collection('teacher').get();
+      return snapshot.docs.map((e) => e.data()['name'].toString()).toList();
+    } catch (e) {
+      print("Error getting teacher names: $e");
+      return [];
+    }
   }
 
   Future<List<String>> getSubjects() async {
-    final snapshot = await _db.collection('subject').orderBy('id').get();
-    return snapshot.docs.map((e) => e.data()['subject'].toString()).toList();
+    try {
+      final snapshot = await _db.collection('subject').get();
+      return snapshot.docs.map((e) => e.data()['subject'].toString()).toList();
+    } catch (e) {
+      print("Error getting subjects: $e");
+      return [];
+    }
   }
 
   Future<GradeDataModel> getGradesByCategory(String category) async {
     Future<List<T>> fetch<T>(
-        String collection, T Function(Map<String, dynamic>) fromMap) async {
+        String collection, T Function(Map<String, dynamic>, String) fromMap) async {
       final snap = await _db
           .collection(collection)
           .where('category', isEqualTo: category)
-          .orderBy('id')
           .get();
       return snap.docs
-          .map((d) => fromMap({...d.data(), 'id': int.tryParse(d.id) ?? d.id}))
+          .map((d) => fromMap(d.data(), d.id))
           .toList();
     }
 
     return GradeDataModel(
       collegeGradeData:
-          await fetch('collegeGrade', (e) => CollegeGradeModel.fromMap(e)),
+          await fetch('collegeGrade', (e, id) => CollegeGradeModel.fromMap(e, id)),
       highSchoolGradeData:
-          await fetch('highSchoolGrade', (e) => HSGradeModel.fromMap(e)),
+          await fetch('highSchoolGrade', (e, id) => HSGradeModel.fromMap(e, id)),
       letterGradeData:
-          await fetch('letterGrade', (e) => LetterGradeModel.fromMap(e)),
+          await fetch('letterGrade', (e, id) => LetterGradeModel.fromMap(e, id)),
       pointGradeData:
-          await fetch('pointGrade', (e) => PointGradeModel.fromMap(e)),
+          await fetch('pointGrade', (e, id) => PointGradeModel.fromMap(e, id)),
       percentageGradeData: await fetch(
-          'percentageGrade', (e) => PercentageGradeModel.fromMap(e)),
+          'percentageGrade', (e, id) => PercentageGradeModel.fromMap(e, id)),
     );
   }
 }

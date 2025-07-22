@@ -97,7 +97,7 @@ class _HomeState extends State<Home> {
   }
 
   Future<void> removeNotification(
-      {required String table, required int id}) async {
+      {required String table, required String id}) async {
     final _db = DatabaseHelper.instance;
     await _db.removeNotification(table: table, id: id);
   }

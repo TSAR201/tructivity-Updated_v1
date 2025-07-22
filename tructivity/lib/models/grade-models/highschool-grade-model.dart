@@ -3,7 +3,7 @@ import 'package:tructivity/functions.dart';
 class HSGradeModel {
   String grade, subject, category, note, credit, course;
   DateTime pickedDateTime;
-  final int? id;
+  final String? id;
   HSGradeModel({
     required this.grade,
     required this.subject,
@@ -14,13 +14,13 @@ class HSGradeModel {
     required this.course,
     this.id,
   });
-  factory HSGradeModel.fromMap(Map<String, dynamic> json) {
+  factory HSGradeModel.fromMap(Map<String, dynamic> json, [String? docId]) {
     DateTime dateTime =
         dateTimeFromString(dateTimeString: json['pickedDateTime']);
     return HSGradeModel(
       grade: json['grade'],
       subject: json['subject'],
-      id: json['id'],
+      id: docId ?? json['id'],
       category: json['category'],
       credit: json['credit'],
       note: json['note'],

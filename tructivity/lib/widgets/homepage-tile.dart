@@ -9,7 +9,7 @@ class HomePageTile extends StatelessWidget {
   final String title;
   final DateTime dateTime;
   final String description;
-  final int id;
+  final String id;
   final _db = DatabaseHelper.instance;
   final refreshCallback;
   final bool isDone;

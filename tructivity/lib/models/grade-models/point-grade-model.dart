@@ -3,7 +3,7 @@ import 'package:tructivity/functions.dart';
 class PointGradeModel {
   String grade, subject, category, note, maxPoints;
   DateTime pickedDateTime;
-  final int? id;
+  final String? id;
   PointGradeModel({
     required this.grade,
     required this.subject,
@@ -13,13 +13,13 @@ class PointGradeModel {
     required this.maxPoints,
     this.id,
   });
-  factory PointGradeModel.fromMap(Map<String, dynamic> json) {
+  factory PointGradeModel.fromMap(Map<String, dynamic> json, [String? docId]) {
     DateTime dateTime =
         dateTimeFromString(dateTimeString: json['pickedDateTime']);
     return PointGradeModel(
       grade: json['grade'],
       subject: json['subject'],
-      id: json['id'],
+      id: docId ?? json['id'],
       category: json['category'],
       maxPoints: json['maxPoints'],
       note: json['note'],

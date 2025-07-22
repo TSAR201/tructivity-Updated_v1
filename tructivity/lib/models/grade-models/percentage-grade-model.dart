@@ -3,7 +3,7 @@ import 'package:tructivity/functions.dart';
 class PercentageGradeModel {
   String grade, subject, category, note, weight;
   DateTime pickedDateTime;
-  final int? id;
+  final String? id;
   PercentageGradeModel({
     required this.grade,
     required this.subject,
@@ -13,13 +13,13 @@ class PercentageGradeModel {
     required this.weight,
     this.id,
   });
-  factory PercentageGradeModel.fromMap(Map<String, dynamic> json) {
+  factory PercentageGradeModel.fromMap(Map<String, dynamic> json, [String? docId]) {
     DateTime dateTime =
         dateTimeFromString(dateTimeString: json['pickedDateTime']);
     return PercentageGradeModel(
       grade: json['grade'],
       subject: json['subject'],
-      id: json['id'],
+      id: docId ?? json['id'],
       category: json['category'],
       weight: json['weight'],
       note: json['note'],

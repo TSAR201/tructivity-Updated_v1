@@ -147,7 +147,7 @@ class _HomePageState extends State<HomePage> {
             description: item.summary,
             title: item.description,
             isDone: item.isDone,
-            id: int.parse(item.location),
+            id: item.location,
             refreshCallback: () {
               setState(() {});
             }),
