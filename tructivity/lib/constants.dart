@@ -26,6 +26,7 @@ final List<DrawerItemModel> drawerItems = [
   drawerTimetable,
   drawerGrades,
   drawerSettings,
+  drawerSignOut,
 ];
 final DrawerItemModel drawerHome =
     DrawerItemModel(text: 'Home', iconData: Icons.home_outlined, index: 0);
@@ -53,6 +54,8 @@ final DrawerItemModel drawerGrades =
 
 final DrawerItemModel drawerSettings = DrawerItemModel(
     text: 'Settings', iconData: Icons.settings_outlined, index: 11);
+final DrawerItemModel drawerSignOut = DrawerItemModel(
+    text: 'Sign Out', iconData: Icons.logout_outlined, index: 12);
 final List<Widget> drawerPages = [
   HomePage(),
   HomeworkPage(),

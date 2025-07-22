@@ -2,6 +2,7 @@ import 'package:tructivity/constants.dart';
 import 'package:tructivity/models/drawer-item-model.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tructivity/services/firebase_auth_service.dart';
 
 class CustomDrawer extends StatefulWidget {
   final int initialIndex;
@@ -92,9 +93,37 @@ class CustomDrawerState extends State<CustomDrawer> {
           ],
         ),
       ),
-      onTap: () {
-        widget.onItemClick(index);
-        selected = index;
+      onTap: () async {
+        // Handle sign out action
+        if (index == drawerSignOut.index) {
+          // Show confirmation dialog
+          bool confirm = await showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+              title: Text('Sign Out'),
+              content: Text('Are you sure you want to sign out?'),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.pop(context, false),
+                  child: Text('Cancel'),
+                ),
+                TextButton(
+                  onPressed: () => Navigator.pop(context, true),
+                  child: Text('Sign Out'),
+                ),
+              ],
+            ),
+          ) ?? false;
+          
+          if (confirm) {
+            await firebaseAuthService.signOut();
+            // Restart the app to show login screen
+            Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+          }
+        } else {
+          widget.onItemClick(index);
+          selected = index;
+        }
       },
       onPanUpdate: (details) {
         if (details.delta.dx < 0) {
