@@ -133,13 +133,13 @@ class _NotePageState extends State<NotePage> {
   }
 
   void onTapNote(NoteModel data) {
-    Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return NoteDetailPage(
-        noteData: data,
-      );
-    })).whenComplete(() {
-      setState(() {});
-    });
+    // Navigator.push(context, MaterialPageRoute(builder: (context) {
+    //   return NoteDetailPage(
+    //     noteData: data,
+    //   );
+    // })).whenComplete(() {
+    //   setState(() {});
+    // });
   }
 
   bool dataEmpty() {

@@ -1,16 +1,18 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:tructivity/theme/theme.dart';
 import 'package:tructivity/wrapper.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
   SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(statusBarColor: Colors.transparent));
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+
   SharedPreferences prefs = await SharedPreferences.getInstance();
   initializeNotificationChannel();
   runApp(

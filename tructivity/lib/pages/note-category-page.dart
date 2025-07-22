@@ -94,19 +94,19 @@ class _NoteCategoryPageState extends State<NoteCategoryPage> {
             child: FloatingActionButton(
               child: Icon(Icons.add, color: Colors.white),
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return NoteDetailPage(
-                    noteData: NoteModel(
-                      category: categoryData.category,
-                      title: '',
-                      description: '[{"insert": "\\n"}]',
-                      pickedDateTime: DateTime.now(),
-                      color: Color(0xffc14279),
-                    ),
-                  );
-                })).whenComplete(() {
-                  setState(() {});
-                });
+                // Navigator.push(context, MaterialPageRoute(builder: (context) {
+                //   return NoteDetailPage(
+                //     noteData: NoteModel(
+                //       category: categoryData.category,
+                //       title: '',
+                //       description: '[{"insert": "\\n"}]',
+                //       pickedDateTime: DateTime.now(),
+                //       color: Color(0xffc14279),
+                //     ),
+                //   );
+                // })).whenComplete(() {
+                //   setState(() {});
+                // });
               },
             ),
           ),
@@ -129,13 +129,13 @@ class _NoteCategoryPageState extends State<NoteCategoryPage> {
   }
 
   void onTapCard(NoteModel data) {
-    Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return NoteDetailPage(
-        noteData: data,
-      );
-    })).whenComplete(() {
-      setState(() {});
-    });
+    // Navigator.push(context, MaterialPageRoute(builder: (context) {
+    //   return NoteDetailPage(
+    //     noteData: data,
+    //   );
+    // })).whenComplete(() {
+    //   setState(() {});
+    // });
   }
 
   Future<void> deleteCategory() async {

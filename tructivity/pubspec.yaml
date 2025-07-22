@@ -44,6 +44,7 @@ dependencies:
   flutter_slider_drawer_v: ^2.0.2
   flutter_quill_extensions: ^11.0.0
   firebase_core: ^3.15.1
+  cloud_firestore: ^5.6.11
 dependency_overrides:
   intl: 0.19.0
 dev_dependencies:
