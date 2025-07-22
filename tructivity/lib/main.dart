@@ -55,7 +55,10 @@ class MyApp extends StatelessWidget {
           theme: Provider.of<ThemeProvider>(context, listen: false).getTheme,
           debugShowCheckedModeBanner: false,
           title: 'Tructivity',
-          home: Wrapper(),
+          initialRoute: '/',
+          routes: {
+            '/': (context) => Wrapper(),
+          },
         );
       },
     );
